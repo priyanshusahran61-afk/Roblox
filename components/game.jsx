@@ -21,24 +21,34 @@ export default function Game() {
     <div style={{ width: '100%', height: '100dvh', position: 'relative' }}>
       <KeyboardControls map={keyMap}>
         <Canvas shadows camera={{ position: [0, 8, 14], fov: 70 }}>
-          <Sky sunPosition={[100, 60, 100]} />
-          <ambientLight intensity={0.6} />
+          {/* Atmosphere */}
+          <Sky sunPosition={[80, 45, -120]} turbidity={6} rayleigh={1.2} />
+          <fog attach="fog" args={['#bcd8e8', 60, 220]} />
+
+          {/* Lighting: warm key sun + cool sky fill + bounce */}
+          <hemisphereLight args={['#bfe3ff', '#5f7d63', 0.55]} />
+          <ambientLight intensity={0.25} />
           <directionalLight
-            position={[50, 80, 30]}
-            intensity={1.4}
+            position={[45, 70, -35]}
+            intensity={1.7}
+            color="#fff4e0"
             castShadow
             shadow-mapSize={[2048, 2048]}
-            shadow-camera-left={-60}
-            shadow-camera-right={60}
-            shadow-camera-top={60}
-            shadow-camera-bottom={-60}
+            shadow-camera-left={-70}
+            shadow-camera-right={70}
+            shadow-camera-top={70}
+            shadow-camera-bottom={-70}
+            shadow-camera-far={220}
+            shadow-bias={-0.0002}
           />
+          <directionalLight position={[-30, 25, 40]} intensity={0.35} color="#cfe6ff" />
+
           <Suspense
             fallback={
               <Html center>
                 <div
                   style={{
-                    background: 'rgba(30,30,30,0.85)',
+                    background: 'rgba(20,24,28,0.9)',
                     color: '#fff',
                     padding: '12px 24px',
                     borderRadius: 8,
