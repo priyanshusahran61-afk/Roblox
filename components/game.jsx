@@ -2,7 +2,7 @@
 
 import { Suspense } from 'react'
 import { Canvas } from '@react-three/fiber'
-import { Sky, KeyboardControls } from '@react-three/drei'
+import { Sky, KeyboardControls, Html } from '@react-three/drei'
 import { Physics } from '@react-three/rapier'
 import Player from './player'
 import World from './world'
@@ -33,7 +33,25 @@ export default function Game() {
             shadow-camera-top={60}
             shadow-camera-bottom={-60}
           />
-          <Suspense>
+          <Suspense
+            fallback={
+              <Html center>
+                <div
+                  style={{
+                    background: 'rgba(30,30,30,0.85)',
+                    color: '#fff',
+                    padding: '12px 24px',
+                    borderRadius: 8,
+                    fontFamily: 'sans-serif',
+                    fontWeight: 700,
+                    whiteSpace: 'nowrap',
+                  }}
+                >
+                  Loading world...
+                </div>
+              </Html>
+            }
+          >
             <Physics gravity={[0, -55, 0]}>
               <World />
               <Player />
